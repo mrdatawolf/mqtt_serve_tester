@@ -38,6 +38,15 @@ function Check-FileExists {
     return Test-Path $filePath
 }
 
+# Check if mosquitto is installed, and install it if not
+if ! command -v mosquitto_sub &> /dev/null; then
+    echo "mosquitto is not installed. Installing..."
+    sudo apt update
+    sudo apt install -y mosquitto mosquitto-clients
+else
+    echo "mosquitto is already installed."
+fi
+
 # Variables
 $intervalTest = 2
 $intervalTest2 = 3
