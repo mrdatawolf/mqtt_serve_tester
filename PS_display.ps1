@@ -71,7 +71,7 @@ $light1 = Create-Light -x 50 -y 50
 $light2 = Create-Light -x 150 -y 50
 $form.Controls.Add($light1)
 $form.Controls.Add($light2)
-$broker_address = "192.168.203.223"
+$broker_address = "127.0.0.1"
 
 # Setup MQTT client
 $mqttSession = Setup-MQTTClient -brokerAddress $broker_address -light1 $light1 -light2 $light2

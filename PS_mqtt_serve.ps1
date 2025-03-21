@@ -5,7 +5,7 @@ if (-not (Get-Module -ListAvailable -Name PSMQTT)) {
 Import-Module PSMQTT
 
 # Connect to the MQTT broker
-$Session = Connect-MQTTBroker -Hostname '192.168.203.223' -Port 1883
+$Session = Connect-MQTTBroker -Hostname '127.0.0.1' -Port 1883
 
 # Function to send a message to a given topic
 function Send-Message {
@@ -38,15 +38,6 @@ function Check-FileExists {
     return Test-Path $filePath
 }
 
-# Check if mosquitto is installed, and install it if not
-if ! command -v mosquitto_sub &> /dev/null; then
-    echo "mosquitto is not installed. Installing..."
-    sudo apt update
-    sudo apt install -y mosquitto mosquitto-clients
-else
-    echo "mosquitto is already installed."
-fi
-
 # Variables
 $intervalTest = 2
 $intervalTest2 = 3
@@ -54,7 +45,7 @@ $dateToday = Get-Date -Format "yyyyMMdd"
 
 while ($true) {
     # Check if IP is alive
-    $ipAlive = Check-IPAlive -ip "192.168.203.223"
+    $ipAlive = Check-IPAlive -ip "127.0.0.1"
     Send-Message -session $Session -topic "ip_alive" -message ($ipAlive | ConvertTo-Json)
     Start-Sleep -Seconds $intervalTest
 
