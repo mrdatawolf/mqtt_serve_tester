@@ -5,7 +5,7 @@ if (-not (Get-Module -ListAvailable -Name PSMQTT)) {
 Import-Module PSMQTT
 
 # Connect to the MQTT broker
-$Session = Connect-MQTTBroker -Hostname '127.0.0.1' -Port 1883
+$Session = Connect-MQTTBroker -Hostname '192.168.203.127' -Port 1883
 
 # Function to send a message to a given topic
 function Send-Message {
@@ -40,7 +40,7 @@ function Check-Switch {
 
 # Function to generate a random flow value with a maximum change of 3
 function Check-Flow {
-    $newFlowValue = $lastFlowValue + (Get-Random -Minimum -3 -Maximum 3)
+    $newFlowValue = $lastFlowValue + (Get-Random -Minimum -30 -Maximum 30)
     if ($newFlowValue -lt 0) {
         $newFlowValue = 0
     } elseif ($newFlowValue -gt 100) {
@@ -53,7 +53,7 @@ function Check-Flow {
 
 # Function to generate a random capacity value as a decimal number
 function Check-Capacity {
-    $newValue = $lastCapValue + (Get-Random -Minimum -5 -Maximum 5)
+    $newValue = $lastCapValue + (Get-Random -Minimum -20 -Maximum 20)
     if ($newValue -lt 0) {
         $newValue = 0
     } elseif ($newValue -gt 100) {
