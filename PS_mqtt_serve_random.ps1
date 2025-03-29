@@ -3,9 +3,12 @@ if (-not (Get-Module -ListAvailable -Name PSMQTT)) {
     Install-Module -Name PSMQTT -Scope CurrentUser -Force
 }
 Import-Module PSMQTT
+$SFPBroker = '192.168.203.127';
+$BTBroker = '192.168.203.223';
 
 # Connect to the MQTT broker
-$Session = Connect-MQTTBroker -Hostname '192.168.203.127' -Port 1883
+$SFPSession = Connect-MQTTBroker -Hostname $SFPBroker -Port 1883
+$BTSession = Connect-MQTTBroker -Hostname $BTBroker -Port 1883
 
 # Function to send a message to a given topic
 function Send-Message {
@@ -64,26 +67,22 @@ function Check-Capacity {
     return $lastCapValue / 100
 }
 
-# Variables
-$intervalTest = 1
-$intervalTest2 = 2
-$intervalTest3 = 1
-$intervalTest4 = 2
+
 
 while ($true) {
     $switch1 = Check-Switch
-    Send-Message -session $Session -topic "Switch1" -message ($switch1 | ConvertTo-Json)
-    Start-Sleep -Seconds $intervalTest
+    Send-Message -session $BTSession -topic "Switch1" -message ($switch1 | ConvertTo-Json)
+    Start-Sleep -Seconds 1
 
     $flow1 = Check-Flow
-    Send-Message -session $Session -topic "Flow1" -message ($flow1 | ConvertTo-Json)
-    Start-Sleep -Seconds $intervalTest2
+    Send-Message -session $BTSession -topic "Flow1" -message ($flow1 | ConvertTo-Json)
+    Start-Sleep -Seconds 1
 
     $switch2 = $switch1 -eq 1
-    Send-Message -session $Session -topic "Switch2" -message ($switch2 | ConvertTo-Json)
-    Start-Sleep -Seconds $intervalTest3
+    Send-Message -session $BTSession -topic "Switch2" -message ($switch2 | ConvertTo-Json)
+    Start-Sleep -Seconds 1
 
     $capacity1 = Check-Capacity
-    Send-Message -session $Session -topic "Capacity1" -message ($capacity1 | ConvertTo-Json)
-    Start-Sleep -Seconds $intervalTest4
+    Send-Message -session $BTSession -topic "Capacity1" -message ($capacity1 | ConvertTo-Json)
+    Start-Sleep -Seconds 1
 }
