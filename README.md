@@ -18,3 +18,7 @@ PS_mqtt_server_random.ps1
 PS_mqtt_serve.ps1
 ## This script is designed to run an MQTT server that simulates a flow and capacity system.
 ## It connects to two MQTT brokers and sends random values for switches, flow, and capacity. 
+
+<!-- Purpose:  Lets you setup a simple mqtt server locally including giving you a random generator to help with testing-->
+<!-- INSTALL_COMMAND: curl -o PS_mqtt_serve.ps1 https://github.com/mrdatawolf/MQTT_SERVE_TESTER/raw/main/PS_mqtt_serve.ps1 -->
+<!-- RUN_COMMAND: PS_mqtt_serve.ps1 -->
